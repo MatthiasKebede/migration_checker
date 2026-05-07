@@ -1,0 +1,129 @@
+pair:
+  source: argparse
+  target: click
+libraries:
+  source_roots:
+  - argparse
+  target_roots:
+  - click
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: argparse
+  target:
+    module: click
+- id: parser-constructor
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser
+  target:
+    symbol: click.command
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_decorator
+    renamed_attributes: {}
+    forbidden_attributes: []
+    await_required_methods: []
+- id: add-argument-option
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser.add_argument
+  target:
+    symbol: click.option
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords:
+    - nargs
+    - dest
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_decorator
+    renamed_attributes: {}
+    forbidden_attributes: []
+    await_required_methods: []
+- id: add-argument-argument
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser.add_argument
+  target:
+    symbol: click.argument
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords:
+    - default
+    - required
+    - nargs
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_decorator
+    renamed_attributes: {}
+    forbidden_attributes: []
+    await_required_methods: []
+- id: parse-args
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser.parse_args
+  target:
+    symbol: click.command
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_decorator
+    renamed_attributes: {}
+    forbidden_attributes: []
+    await_required_methods: []
+- id: add-subparsers
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser.add_subparsers
+  target:
+    symbol: click.group
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_decorator
+    renamed_attributes: {}
+    forbidden_attributes: []
+    await_required_methods: []

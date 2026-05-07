@@ -1,0 +1,118 @@
+pair:
+  source: flask
+  target: quart
+libraries:
+  source_roots:
+  - flask
+  target_roots:
+  - quart
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: flask
+  target:
+    module: quart
+- id: app-constructor
+  kind: call
+  source:
+    symbol: flask.Flask
+  target:
+    symbol: quart.Quart
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - before_first_request
+    await_required_methods: []
+- id: jsonify
+  kind: call
+  source:
+    symbol: flask.jsonify
+  target:
+    symbol: quart.jsonify
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - before_first_request
+    await_required_methods: []
+- id: render-template
+  kind: call
+  source:
+    symbol: flask.render_template
+  target:
+    symbol: quart.render_template
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: true
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - before_first_request
+    await_required_methods: []
+- id: abort
+  kind: call
+  source:
+    symbol: flask.abort
+  target:
+    symbol: quart.abort
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - before_first_request
+    await_required_methods: []
+- id: request-form-access
+  kind: access
+  source:
+    symbol: flask.request.form
+  target:
+    symbol: quart.request.get_json
+  usage:
+    await_required: true
+    access_kind: call

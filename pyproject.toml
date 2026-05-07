@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "migration_checker"
+version = "0.0.1"
+authors = [
+  { name="Matthias Kebede" },
+]
+description = "A static analysis tool for Python library migrations."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "libcst",
+    "pyyaml",
+    "python-dotenv",
+]
+
+[project.scripts]
+migration-checker = "migration_checker.main:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]

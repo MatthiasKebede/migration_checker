@@ -1,0 +1,77 @@
+pair:
+  source: pandas
+  target: dask.dataframe
+libraries:
+  source_roots:
+  - pandas
+  target_roots:
+  - dask
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: pandas
+  target:
+    module: dask
+    name: dataframe
+- id: read-csv
+  kind: call
+  source:
+    symbol: pandas.read_csv
+  target:
+    symbol: dask.dataframe.read_csv
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords:
+    - engine
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: dataframe
+    renamed_attributes: {}
+    forbidden_attributes:
+    - values
+    - iterrows
+    - iloc
+    - append
+    await_required_methods: []
+- id: concat
+  kind: call
+  source:
+    symbol: pandas.concat
+  target:
+    symbol: dask.dataframe.concat
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: dataframe
+    renamed_attributes: {}
+    forbidden_attributes:
+    - values
+    - iterrows
+    - iloc
+    - append
+    await_required_methods: []

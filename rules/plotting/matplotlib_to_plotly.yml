@@ -1,0 +1,127 @@
+pair:
+  source: matplotlib.pyplot
+  target: plotly.express
+libraries:
+  source_roots:
+  - matplotlib
+  target_roots:
+  - plotly
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: matplotlib
+    name: pyplot
+  target:
+    module: plotly
+    name: express
+- id: plot
+  kind: call
+  source:
+    symbol: matplotlib.pyplot.plot
+  target:
+    symbol: plotly.express.line
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: figure
+    renamed_attributes: {}
+    forbidden_attributes:
+    - figure
+    - axes
+    - gca
+    - set_xlabel
+    - set_ylabel
+    await_required_methods: []
+- id: scatter
+  kind: call
+  source:
+    symbol: matplotlib.pyplot.scatter
+  target:
+    symbol: plotly.express.scatter
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: figure
+    renamed_attributes: {}
+    forbidden_attributes:
+    - figure
+    - axes
+    - gca
+    - set_xlabel
+    - set_ylabel
+    await_required_methods: []
+- id: bar
+  kind: call
+  source:
+    symbol: matplotlib.pyplot.bar
+  target:
+    symbol: plotly.express.bar
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: figure
+    renamed_attributes: {}
+    forbidden_attributes:
+    - figure
+    - axes
+    - gca
+    - set_xlabel
+    - set_ylabel
+    await_required_methods: []
+- id: hist
+  kind: call
+  source:
+    symbol: matplotlib.pyplot.hist
+  target:
+    symbol: plotly.express.histogram
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: figure
+    renamed_attributes: {}
+    forbidden_attributes:
+    - figure
+    - axes
+    - gca
+    - set_xlabel
+    - set_ylabel
+    await_required_methods: []

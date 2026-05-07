@@ -1,0 +1,71 @@
+pair:
+  source: argparse
+  target: configargparse
+libraries:
+  source_roots:
+  - argparse
+  target_roots:
+  - configargparse
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: argparse
+  target:
+    module: configargparse
+- id: parser-constructor
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser
+  target:
+    symbol: configargparse.ArgParser
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_parser
+    renamed_attributes: {}
+    forbidden_attributes:
+    - parse_intermixed_args
+    - add_subparsers
+    await_required_methods: []
+- id: add-argument
+  kind: call
+  source:
+    symbol: argparse.ArgumentParser.add_argument
+  target:
+    symbol: configargparse.ArgParser.add
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: cli_parser
+    renamed_attributes: {}
+    forbidden_attributes:
+    - parse_intermixed_args
+    - add_subparsers
+    await_required_methods: []

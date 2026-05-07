@@ -1,0 +1,97 @@
+pair:
+  source: flask
+  target: fastapi
+libraries:
+  source_roots:
+  - flask
+  target_roots:
+  - fastapi
+diagnostics:
+  severity:
+    leftover_source_import: error
+    leftover_source_call: error
+    renamed_keyword_argument: error
+    forbidden_keyword_argument: error
+    missing_required_keyword: error
+    positional_argument_misuse: error
+    missing_await: error
+    missing_context_manager: error
+    mixed_source_target_assignment: warning
+    renamed_attribute_access: error
+    forbidden_attribute_access: error
+    duplicate_migration_usage: warning
+rules:
+- id: source-import-root
+  kind: import
+  source:
+    module: flask
+  target:
+    module: fastapi
+- id: app-constructor
+  kind: call
+  source:
+    symbol: flask.Flask
+  target:
+    symbol: fastapi.FastAPI
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords:
+    - template_folder
+    - static_url_path
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - run
+    - jinja_env
+    - before_first_request
+    await_required_methods: []
+- id: jsonify
+  kind: call
+  source:
+    symbol: flask.jsonify
+  target:
+    symbol: fastapi.responses.JSONResponse
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - run
+    - jinja_env
+    - before_first_request
+    await_required_methods: []
+- id: abort
+  kind: call
+  source:
+    symbol: flask.abort
+  target:
+    symbol: fastapi.HTTPException
+  contract:
+    renamed_keywords: {}
+    forbidden_keywords: []
+    required_keywords: []
+    require_keywords: false
+  usage:
+    await_required: false
+    context_manager: none
+  return:
+    tag: app
+    renamed_attributes: {}
+    forbidden_attributes:
+    - run
+    - jinja_env
+    - before_first_request
+    await_required_methods: []
